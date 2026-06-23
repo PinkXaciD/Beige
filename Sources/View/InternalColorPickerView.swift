@@ -41,17 +41,19 @@ internal struct InternalColorPicker: View {
             return size
         }
         
+        let constantHeight = geometry.size.height - cornerRadius * 2
+        
         if offset <= cornerRadius {
             let r = pow(cornerRadius, 2)
             let d = pow((cornerRadius - offset), 2)
-            return 2 * sqrt(r - d) - (padding) * 2
+            return 2 * sqrt(r - d) - (padding) * 2 + constantHeight
         } else if offset >= (geometry.size.width - cornerRadius) {
-            let trailingRadius = geometry.size.width - geometry.size.height
+            let trailingRadius = geometry.size.width - geometry.size.height + constantHeight
             let hangingOffset = (offset + padding) - trailingRadius
             
             let r = pow(cornerRadius, 2)
             let d = pow((cornerRadius - hangingOffset), 2)
-            return 2 * sqrt(r - d) - (padding) * 2
+            return 2 * sqrt(r - d) - (padding) * 2 + constantHeight
         }
         
         return size
@@ -91,7 +93,8 @@ internal struct InternalColorPicker: View {
         lightness: Double,
         chroma: Double,
         enableHaptics: Bool,
-        hideHandle: Bool
+        hideHandle: Bool,
+        cornerRadius: CGFloat?
     ) {
         self._value = State(initialValue: oklch.wrappedValue.h)
         self._oklch = oklch
@@ -100,7 +103,7 @@ internal struct InternalColorPicker: View {
         self.chroma = chroma
         
         let padding: CGFloat = 3
-        let cornerRadius = geometry.size.height * 0.5
+        let defaultCornerRadius = geometry.size.height * 0.5
         
         self.startPoint = UnitPoint(x: (geometry.size.height / (geometry.size.height - padding * 0.5)) - 1, y: 0)
         self.endPoint = UnitPoint(x: 1 - startPoint.x, y: 0)
@@ -108,8 +111,8 @@ internal struct InternalColorPicker: View {
         self.padding = padding
         self.size = geometry.size.height - padding * 2
         self.strokeThickness = min(3, geometry.size.height * 0.075)
-        self.cornerRadius = cornerRadius
-        self.overlayCornerRadius = cornerRadius - padding
+        self.cornerRadius = cornerRadius ?? defaultCornerRadius
+        self.overlayCornerRadius = (cornerRadius ?? defaultCornerRadius) - padding
         
         self.enableHaptics = enableHaptics
         self.hideHandle = hideHandle

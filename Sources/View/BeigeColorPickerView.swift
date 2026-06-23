@@ -14,11 +14,13 @@ public struct BeigeColorPicker: View {
     private let chroma: Double
     private let enableHaptics: Bool
     private let hideHandle: Bool
+    private let cornerRadius: CGFloat?
     
     public init(
         color oklch: Binding<OKLCH>,
         enableHaptics: Bool = true,
-        hideHandle: Bool = true
+        hideHandle: Bool = true,
+        cornerRadius: CGFloat? = nil
     ) {
         self._oklch = oklch
         
@@ -26,6 +28,7 @@ public struct BeigeColorPicker: View {
         self.chroma = oklch.wrappedValue.c
         self.enableHaptics = enableHaptics
         self.hideHandle = hideHandle
+        self.cornerRadius = cornerRadius
     }
     
     public var body: some View {
@@ -36,7 +39,8 @@ public struct BeigeColorPicker: View {
                 lightness: lightness,
                 chroma: chroma,
                 enableHaptics: enableHaptics,
-                hideHandle: hideHandle
+                hideHandle: hideHandle,
+                cornerRadius: cornerRadius
             )
         }
         .environment(\.layoutDirection, .leftToRight)
