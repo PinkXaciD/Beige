@@ -55,10 +55,10 @@ BeigeColorPicker(oklch: $color)
 > ### Note
 > `BeigeColorPicker` will take lightness and chroma values from the binding.
 
-You can disable haptic feedback by setting `playHaptics` to `false`. `hideHandle` controls whether the slider handle collapses into a line.
+You can disable haptic feedback by setting `playHaptics` to `false`. `hideHandle` controls whether the slider handle collapses into a line. And you can set a `cornerRadius` of the picker.
 
 ```
-BeigeColorPicker(oklch: $color, playHaptics: false, hideHandle: false)
+BeigeColorPicker(oklch: $color, playHaptics: false, hideHandle: false, cornerRadius: 20)
 ```
 
 > Hidden handle will look like this:
